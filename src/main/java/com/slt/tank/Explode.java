@@ -16,8 +16,8 @@ public class Explode {
 	public Explode(int x, int y) {
 		this.x = x;
 		this.y = y;
-		
-//		new Thread(()->new Audio("audio/explode.wav").play()).start();
+		//创建一个线程 让他播放声音
+		new Thread(()->new Audio("audio/explode.wav").play()).start();
 	}
 	
 	

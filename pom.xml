@@ -66,6 +66,7 @@
                     <include>**/*.gif</include>
                     <include>**/*.png</include>
                     <include>**/*.jpg</include>
+                    <include>**/*.wav</include>
                     <include>**/*.properties</include>
                 </includes>
             </resource>

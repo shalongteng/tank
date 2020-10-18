@@ -9,7 +9,7 @@ public class Main {
 		for(int i=0; i<5; i++) {
 			tf.tanks.add(new Tank(50 + i*80, 200, Dir.DOWN, Group.BAD, tf));
 		}
-		
+		//每隔50ms 调用一次repaint repaint方法会调用paint方法
 		while(true) {
 			Thread.sleep(50);
 			tf.repaint();

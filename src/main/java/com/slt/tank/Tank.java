@@ -57,11 +57,14 @@ public class Tank {
 	public boolean isMoving() {
 		return moving;
 	}
-
+	/**
+	 * 根据方法进行移动
+	 */
 	private void move() {
-		
-		if(!moving) return ;
-		
+		//如果没有移动 退出方法
+		if(!moving) {
+			return ;
+		}
 		switch (dir) {
 		case LEFT:
 			x -= SPEED;
@@ -76,8 +79,10 @@ public class Tank {
 			y += SPEED;
 			break;
 		}
-		
-		if(random.nextInt(10) > 8) this.fire();
+		//坦克移动时候，随机发射子弹
+		if(random.nextInt(10) > 8) {
+			this.fire();
+		}
 	}
 
 	public void paint(Graphics g) {

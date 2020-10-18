@@ -54,7 +54,6 @@ public class Bullet {
 	}
 	
 	private void move() {
-		
 		switch (dir) {
 		case LEFT:
 			x -= SPEED;
@@ -70,12 +69,20 @@ public class Bullet {
 			break;
 		}
 		
-		if(x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) living = false;
+		if(x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT){
+			living = false;
+		}
 		
 	}
 
+	/**
+	 * 碰撞检测
+	 * @param tank
+	 */
 	public void collideWith(Tank tank) {
-		if(this.group == tank.getGroup()) return;
+		if(this.group == tank.getGroup()) {
+			return;
+		}
 		
 		//TODO: 用一个rect来记录子弹的位置
 		Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);

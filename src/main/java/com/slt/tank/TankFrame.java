@@ -16,6 +16,7 @@ public class TankFrame extends Frame {
 	
 	static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
+	Explode explode = new Explode(100,100);
 	public TankFrame() {
 		setSize(GAME_WIDTH, GAME_HEIGHT);
 		setResizable(false);
@@ -34,8 +35,11 @@ public class TankFrame extends Frame {
 		});
 	}
 
+	/**
+	 * 利用双缓冲，消除闪烁
+	 * 在内存中加载完成，在拷贝到显存中。
+	 */
 	Image offScreenImage = null;
-
 	@Override
 	public void update(Graphics g) {
 		if (offScreenImage == null) {
@@ -68,9 +72,12 @@ public class TankFrame extends Frame {
 		}
 
 		for(int i=0; i<bullets.size(); i++) {
-			for(int j = 0; j<tanks.size(); j++) 
+			for(int j = 0; j<tanks.size(); j++) {
 				bullets.get(i).collideWith(tanks.get(j));
+			}
 		}
+
+		explode.paint(g);
 		// for(Iterator<Bullet> it = bullets.iterator(); it.hasNext();) {
 		// Bullet b = it.next();
 		// if(!b.live) it.remove();
@@ -141,21 +148,29 @@ public class TankFrame extends Frame {
 			setMainTankDir();
 		}
 
+		/**
+		 * 设置主站坦克方向
+		 */
 		private void setMainTankDir() {
 
-			if (!bL && !bU && !bR && !bD)
+			if (!bL && !bU && !bR && !bD){
 				myTank.setMoving(false);
+			}
 			else {
 				myTank.setMoving(true);
 
-				if (bL)
+				if (bL){
 					myTank.setDir(Dir.LEFT);
-				if (bU)
+				}
+				if (bU){
 					myTank.setDir(Dir.UP);
-				if (bR)
+				}
+				if (bR){
 					myTank.setDir(Dir.RIGHT);
-				if (bD)
+				}
+				if (bD){
 					myTank.setDir(Dir.DOWN);
+				}
 			}
 		}
 	}

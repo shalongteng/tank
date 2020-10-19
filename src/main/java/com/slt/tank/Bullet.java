@@ -91,8 +91,12 @@ public class Bullet {
 		if(rect1.intersects(rect2)) {
 			tank.die();
 			this.die();
+
+			//计算爆炸的位置，跟子弹发射位置计算一样
+			int eX = tank.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;
+			int eY = tank.getY() + Tank.HEIGHT/2 - Explode.HEIGHT/2;
 			//爆炸
-			tf.explodeList.add(new Explode(x,y,tf));
+			tf.explodeList.add(new Explode(eX,eY,tf));
 		}
 		
 	}

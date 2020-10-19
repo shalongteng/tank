@@ -5,14 +5,11 @@ import java.util.Random;
 
 public class Tank {
 	private static final int SPEED = 1;
-	public static int WIDTH = ResourceMgr.tankD.getWidth();
-
-	public static int HEIGHT = ResourceMgr.tankD.getHeight();
+	public static int WIDTH = ResourceMgr.goodTankD.getWidth();
+	public static int HEIGHT = ResourceMgr.goodTankD.getHeight();
 	
 	private Random random = new Random();
-
 	private int x, y;
-
 	private Dir dir = Dir.DOWN;
 
 	private boolean moving = true;
@@ -79,30 +76,40 @@ public class Tank {
 			y += SPEED;
 			break;
 		}
-		//坦克移动时候，随机发射子弹
-		if(random.nextInt(10) > 8) {
+		//坦克移动时候，随机发射子弹,随机移动
+		if(this.group == Group.BAD && random.nextInt(100) > 95){
 			this.fire();
 		}
-	}
 
-	public void paint(Graphics g) {
-		if(!living) tf.tanks.remove(this);
-		
-		switch(dir) {
-		case LEFT:
-			g.drawImage(ResourceMgr.tankL, x, y, null);
-			break;
-		case UP:
-			g.drawImage(ResourceMgr.tankU, x, y, null);
-			break;
-		case RIGHT:
-			g.drawImage(ResourceMgr.tankR, x, y, null);
-			break;
-		case DOWN:
-			g.drawImage(ResourceMgr.tankD, x, y, null);
-			break;
+		if(this.group == Group.BAD && random.nextInt(100) > 95){
+			randomDir();
 		}
-	
+
+
+	}
+	//给他定义随机方向
+	private void randomDir() {
+		this.dir = Dir.values()[random.nextInt(4)];
+	}
+	public void paint(Graphics g) {
+		if(!living){
+			tf.tanks.remove(this);
+		}
+
+		switch(dir) {
+			case LEFT:
+				g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
+				break;
+			case UP:
+				g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
+				break;
+			case RIGHT:
+				g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
+				break;
+			case DOWN:
+				g.drawImage(this.group == Group.GOOD? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
+				break;
+		}
 		move();
 	
 	}

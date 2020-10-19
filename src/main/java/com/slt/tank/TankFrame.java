@@ -9,14 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TankFrame extends Frame {
-
 	Tank myTank = new Tank(200, 400, Dir.DOWN, Group.GOOD, this);
 	List<Bullet> bullets = new ArrayList<>();
 	List<Tank> tanks = new ArrayList<>();
-	
+	List<Explode> explodeList = new ArrayList<>();
+
 	static final int GAME_WIDTH = 1080, GAME_HEIGHT = 860;
 
-	List<Explode> explodeList = new ArrayList<>();
 	public TankFrame() {
 		setSize(GAME_WIDTH, GAME_HEIGHT);
 		setResizable(false);

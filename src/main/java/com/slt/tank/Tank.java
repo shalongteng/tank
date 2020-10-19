@@ -17,7 +17,7 @@ public class Tank {
 	private boolean living = true;
 	private Group group = Group.BAD;
 
-
+	//将rect作为属性，碰撞检测时候就不用new了，减少GC
 	Rectangle rect = new Rectangle();
 
 	public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {

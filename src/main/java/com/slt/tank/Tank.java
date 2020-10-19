@@ -16,7 +16,10 @@ public class Tank {
 	private TankFrame tf = null;
 	private boolean living = true;
 	private Group group = Group.BAD;
-	
+
+
+	Rectangle rect = new Rectangle();
+
 	public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
 		super();
 		this.x = x;
@@ -24,6 +27,11 @@ public class Tank {
 		this.dir = dir;
 		this.group = group;
 		this.tf = tf;
+
+		rect.x = this.x;
+		rect.y = this.y;
+		rect.width = WIDTH;
+		rect.height = HEIGHT;
 	}
 	public void fire() {
 		int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
@@ -84,9 +92,29 @@ public class Tank {
 		if(this.group == Group.BAD && random.nextInt(100) > 95){
 			randomDir();
 		}
+		//边界检测 不让他开出去
+		boundsCheck();
 
-
+		//update rect
+		rect.x = this.x;
+		rect.y = this.y;
 	}
+
+	private void boundsCheck() {
+		if (this.x < 2) {
+			x = 2;
+		}
+		if (this.y < 28) {
+			y = 28;
+		}
+		if (this.x > TankFrame.GAME_WIDTH- Tank.WIDTH -2) {
+			x = TankFrame.GAME_WIDTH - Tank.WIDTH -2;
+		}
+		if (this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT -2 ){
+			y = TankFrame.GAME_HEIGHT -Tank.HEIGHT -2;
+		}
+	}
+
 	//给他定义随机方向
 	private void randomDir() {
 		this.dir = Dir.values()[random.nextInt(4)];

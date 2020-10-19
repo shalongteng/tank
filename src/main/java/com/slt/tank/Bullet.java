@@ -91,6 +91,8 @@ public class Bullet {
 		if(rect1.intersects(rect2)) {
 			tank.die();
 			this.die();
+			//爆炸
+			tf.explodeList.add(new Explode(x,y,tf));
 		}
 		
 	}

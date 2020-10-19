@@ -12,10 +12,12 @@ public class Explode {
 
 	//每paint一次 step加一
 	private int step = 0;
-	
-	public Explode(int x, int y) {
+	private TankFrame tf =null;
+
+	public Explode(int x, int y,TankFrame tankFrame) {
 		this.x = x;
 		this.y = y;
+		this.tf = tankFrame;
 		//创建一个线程 让他播放声音
 		new Thread(()->new Audio("audio/explode.wav").play()).start();
 	}
@@ -27,6 +29,7 @@ public class Explode {
 		
 		if(step >= ResourceMgr.explodes.length){
 			step = 0;
+			tf.explodeList.remove(this);
 //			TankFrame.INSTANCE.explodes.remove(this);
 		}
 

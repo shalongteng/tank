@@ -10,6 +10,9 @@ import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+/**
+ * junit测试从硬盘上读取图片文件
+ */
 class ImageTest {
 
 	@Test

@@ -8,12 +8,19 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 坦克窗口
+ */
 public class TankFrame extends Frame {
+	//自己的 主站坦克
 	Tank myTank = new Tank(200, 400, Dir.DOWN, Group.GOOD, this);
+	//子弹 list
 	List<Bullet> bullets = new ArrayList<>();
+	//敌人坦克list
 	List<Tank> tanks = new ArrayList<>();
+	//爆炸list
 	List<Explode> explodeList = new ArrayList<>();
-
+	//窗口大小
 	static final int GAME_WIDTH = 1080, GAME_HEIGHT = 860;
 
 	public TankFrame() {
@@ -22,15 +29,15 @@ public class TankFrame extends Frame {
 		setTitle("tank war");
 		setVisible(true);
 
-		this.addKeyListener(new MyKeyListener());
-
+		addKeyListener(new MyKeyListener());
+		/**
+		 * WindowAdapter 并不是适配器 模式
+		 */
 		addWindowListener(new WindowAdapter() {
-
 			@Override
 			public void windowClosing(WindowEvent e) { // bjmashibing/tank
 				System.exit(0);
 			}
-
 		});
 	}
 
@@ -53,20 +60,25 @@ public class TankFrame extends Frame {
 		g.drawImage(offScreenImage, 0, 0, null);
 	}
 
+	/**
+	 * 窗口 发生变化时候，就会回调这个方法。
+	 * 每次窗口变化，都需要重新绘制这个窗口。
+	 * @param g 画笔类对象
+	 */
 	@Override
 	public void paint(Graphics g) {
 		Color c = g.getColor();
 		g.setColor(Color.WHITE);
 		g.drawString("子弹的数量:" + bullets.size(), 10, 60);
 		g.drawString("敌人的数量:" + tanks.size(), 10, 80);
-		g.drawString("爆炸的数量:" + tanks.size(), 10, 100);
+		g.drawString("爆炸的数量:" + tanks.size(), 10, 120);
 		g.setColor(c);
 
-		myTank.paint(g);
+		myTank.paint(g);//画自己的tank
 		for (int i = 0; i < bullets.size(); i++) {
 			bullets.get(i).paint(g);
 		}
-		
+
 		for (int i = 0; i < tanks.size(); i++) {
 			tanks.get(i).paint(g);
 		}

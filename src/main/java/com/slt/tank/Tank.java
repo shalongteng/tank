@@ -3,6 +3,9 @@ package com.slt.tank;
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * tank 类
+ */
 public class Tank {
 	private static final int SPEED = 2;
 	public static int WIDTH = ResourceMgr.goodTankD.getWidth();
@@ -10,6 +13,10 @@ public class Tank {
 	
 	private Random random = new Random();
 	private int x, y;
+	/**
+	 * tank 初始方向
+	 * 因为方向只有四个,有限个数 所以使用枚举类
+	 */
 	private Dir dir = Dir.DOWN;
 
 	private boolean moving = true;
@@ -18,7 +25,7 @@ public class Tank {
 	private Group group = Group.BAD;
 
 	//将rect作为属性，碰撞检测时候就不用new了，减少GC
-	Rectangle rect = new Rectangle();
+	public Rectangle rect = new Rectangle();
 
 	public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
 		super();
@@ -36,19 +43,19 @@ public class Tank {
 	public void fire() {
 		int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
 		int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
-		
+
 		tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
 	}
-	
+
 	public Dir getDir() {
 		return dir;
 	}
-	
+
 	public int getX() {
 		return x;
 	}
-	
-	
+
+
 	public Group getGroup() {
 		return group;
 	}
@@ -139,7 +146,7 @@ public class Tank {
 				break;
 		}
 		move();
-	
+
 	}
 
 
@@ -161,7 +168,7 @@ public class Tank {
 	public void die() {
 		this.living = false;
 	}
-	
-	
+
+
 
 }

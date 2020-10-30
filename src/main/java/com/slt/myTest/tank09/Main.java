@@ -1,7 +1,7 @@
 package com.slt.myTest.tank09;
 
 /**
- * 抽象出坦克类
+ * 定义子弹类
  */
 public class Main {
     public static void main(String[] args) throws InterruptedException {

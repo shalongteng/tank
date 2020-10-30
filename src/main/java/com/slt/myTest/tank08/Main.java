@@ -1,7 +1,7 @@
 package com.slt.myTest.tank08;
 
 /**
- * 抽象出坦克类
+ * 添加坦克静止的处理
  */
 public class Main {
     public static void main(String[] args) throws InterruptedException {

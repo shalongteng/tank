@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * 画出tank
+ */
 public class TankFrame extends Frame {
     /**
      * Java中每次重绘都会调用paint方法

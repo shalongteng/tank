@@ -5,6 +5,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
+ * 坦克移动（手动）
  * 将坦克坐标定为变量，在paint中改编值，paint被调用后，就可以动起来
  */
 public class TankFrame extends Frame {

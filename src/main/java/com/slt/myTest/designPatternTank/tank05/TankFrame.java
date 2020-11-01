@@ -1,0 +1,157 @@
+package com.slt.myTest.designPatternTank.tank05;
+
+import com.slt.myTest.designPatternTank.tank05.stragety.DefaultFireStrategy;
+import com.slt.myTest.designPatternTank.tank05.stragety.FireStrategy;
+
+import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+/**
+ *
+ */
+public class TankFrame extends Frame {
+    public static final int GAME_WIDTH = 1080, GAME_HEIGHT = 800;
+
+    TankFrame(){
+        this.setTitle("tank war");
+        this.setVisible(true);
+
+        this.setResizable(true);
+        this.setSize(GAME_WIDTH,GAME_HEIGHT);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(1);
+            }
+        });
+        /**
+         * 添加键盘监听事件
+         */
+        addKeyListener(new MyKeyListener());
+    }
+    /**
+     * Java中每次重绘都会调用paint方法
+     */
+    @Override
+    public void paint(Graphics graphics){
+        GameModel.getInstance().paint(graphics);
+    }
+
+    /**
+     * 利用双缓冲，消除闪烁
+     * 在内存中加载完成，在拷贝到显存中。
+     */
+    Image offScreenImage = null;
+    @Override
+    public void update(Graphics g) {
+        if(offScreenImage == null) {
+            offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.BLACK);
+        gOffScreen.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage, 0, 0, null);
+    }
+
+    class MyKeyListener extends KeyAdapter {
+        boolean bL = false;
+        boolean bU = false;
+        boolean bR = false;
+        boolean bD = false;
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            //vk virtual key
+            switch (e.getKeyCode()){
+                case KeyEvent.VK_UP:
+                    bU = true;
+                    break;
+                case KeyEvent.VK_DOWN:
+                    bD = true;
+                    break;
+                case KeyEvent.VK_LEFT:
+                    bL = true;
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    bR = true;
+                    break;
+                case KeyEvent.VK_CONTROL:
+                    GameModel.getInstance().getMainTank().fire(new DefaultFireStrategy());
+                    break;
+                case KeyEvent.VK_Z:
+                    //加了不同策略   策略模式
+                    //策略从配置文件读取，灵活方便
+                    try {
+                        FireStrategy fireStrategy = (FireStrategy) Class.forName(PropertyMgr.getString("goodFS")).newInstance();
+                        GameModel.getInstance().getMainTank().fire(fireStrategy);
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                    break;
+                default:
+                    break;
+            }
+            //键盘按下，改变tank方向
+            setMainTankDir();
+        }
+        /**
+         * 键盘抬起 给四个bool值 恢复false
+         * @param e
+         */
+        @Override
+        public void keyReleased(KeyEvent e) {
+            //vk virtual key
+            switch (e.getKeyCode()){
+                case KeyEvent.VK_UP:
+                    bU = false;
+                    break;
+                case KeyEvent.VK_DOWN:
+                    bD = false;
+                    break;
+                case KeyEvent.VK_LEFT:
+                    bL = false;
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    bR = false;
+                    break;
+                default:
+                    break;
+            }
+            //键盘抬起，tank静止
+            setMainTankDir();
+        }
+
+        /**
+         * 修改主站tank 方向
+         */
+        private void setMainTankDir() {
+            //如果键盘没有 按下，tank静止
+            if(!bL && !bU && !bR && !bD){
+                GameModel.getInstance().getMainTank().moving =false;
+            }else {
+                //键盘按下，tank 移动
+                GameModel.getInstance().getMainTank().moving = true;
+                if(bL){
+                    GameModel.getInstance().getMainTank().dir = Dir.LEFT;
+                }
+                if(bU){
+                    GameModel.getInstance().getMainTank().dir = Dir.UP;
+                }
+                if(bR){
+                    GameModel.getInstance().getMainTank().dir = Dir.RIGHT;
+                }
+                if(bD){
+                    GameModel.getInstance().getMainTank().dir = Dir.DOWN;
+                }
+            }
+        }
+
+    }
+}

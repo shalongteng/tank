@@ -1,4 +1,4 @@
-package com.slt.myTest.netTank;
+package com.slt.myTest.netTank.tank04;
 
 import lombok.Data;
 

@@ -1,8 +1,8 @@
-package com.slt.myTest.netTank;
+package com.slt.myTest.netTank.tank02;
 
 
 /**
- * 网络版 不需要npc了，不需要敌方tank了
+ * channelGroup实现群发
  */
 public class Main {
     public static void main(String[] args) throws InterruptedException {

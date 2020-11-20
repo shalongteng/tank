@@ -1,5 +1,6 @@
 package com.slt.myTest.netTank.tank07;
 
+import com.slt.myTest.netTank.tank07.net.BulletNewMsg;
 import com.slt.myTest.netTank.tank07.net.Client;
 import com.slt.myTest.netTank.tank07.net.TankJoinMsg;
 import com.slt.myTest.netTank.tank07.net.TankStartMovingMsg;
@@ -160,7 +161,12 @@ public class Tank extends Frame {
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
         int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
 
-        tankFrame.bulletList.add(new Bullet(bX, bY, dir,tankFrame,group));
+        Bullet bullet = new Bullet(bX, bY, dir, tankFrame, group);
+
+        tankFrame.bulletList.add(bullet);
+        Client.INSTANCE.send(new BulletNewMsg(bullet));
+
+//        if(this.group == Group.GOOD) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
     }
 
     public void die() {

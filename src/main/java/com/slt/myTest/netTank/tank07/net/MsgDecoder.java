@@ -35,21 +35,24 @@ public class MsgDecoder extends ByteToMessageDecoder {
 
         Msg msg = null;
         //Class.forName(msgType.toString + "Msg").newInstance();
-        switch (msgType) {
-            case TankJoin:
-                msg = new TankJoinMsg();
-                break;
-            case TankStartMoving:
-                msg = new TankStartMovingMsg();
-                //消息自己来解析
-                break;
-            case TankStop:
-                msg = new TankStopMsg();
-                //消息自己来解析
-                break;
-            default:
-                break;
-        }
+//        switch (msgType) {
+//            case TankJoin:
+//                msg = new TankJoinMsg();
+//                break;
+//            case TankStartMoving:
+//                msg = new TankStartMovingMsg();
+//                //消息自己来解析
+//                break;
+//            case TankStop:
+//                msg = new TankStopMsg();
+//                //消息自己来解析
+//                break;
+//            default:
+//                break;
+//        }
+
+        msg = (Msg)Class.forName("com.slt.myTest.netTank.tank07.net." + msgType.toString() + "Msg").getDeclaredConstructor().newInstance();
+
         msg.parse(bytes);
         out.add(msg);
     }

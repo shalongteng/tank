@@ -74,10 +74,10 @@ public class TankFrame extends Frame {
         tankMap.values().stream().forEach(p->p.paint(graphics));
 
         //每一个子弹 都要和 任何一个tank 做碰撞检测
+        Collection<Tank> values = tankMap.values();
         for(int i=0; i<bulletList.size(); i++) {
-            for(int j = 0; j<tankMap.size(); j++){
-//                bulletList.get(i).collideWith(tankMap.values().get(j));
-            }
+            for(Tank t : values )
+                bulletList.get(i).collideWith(t);
         }
 
         for (int i = 0; i < explodeList.size(); i++) {

@@ -1,8 +1,11 @@
 package com.slt.myTest.netTank.tank07;
 
+import com.slt.myTest.netTank.tank07.net.Client;
+import com.slt.myTest.netTank.tank07.net.TankDieMsg;
 import lombok.Data;
 
 import java.awt.*;
+import java.util.UUID;
 
 /**
  * 和抽象出 tank类 相似
@@ -24,7 +27,10 @@ public class Bullet extends Frame{
     private Group group = Group.BAD;
 
     public Rectangle rectangle = new Rectangle();
-    Bullet(int x, int y, Dir dir, TankFrame tankFrame, Group group){
+
+    //一个子弹 一个id
+    private UUID id = UUID.randomUUID();
+    public Bullet(int x, int y, Dir dir, TankFrame tankFrame, Group group){
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -95,10 +101,7 @@ public class Bullet extends Frame{
             return;
         }
 
-        //TODO: 用一个rect来记录子弹的位置
-        //子弹所在的长方形
-        //tank 所在的长方形
-        //有交集
+        //tank 所在的长方形，子弹所在的长方形，有交集
         if(rectangle.intersects(tank.rectangle)) {
             tank.die();
             this.die();
@@ -107,6 +110,8 @@ public class Bullet extends Frame{
             int eX = tank.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;
             int eY = tank.getY() + Tank.HEIGHT/2 - Explode.HEIGHT/2;
             tankFrame.explodeList.add(new Explode(eX, eY, tankFrame));
+            //爆炸以后发送tank死亡消息
+            Client.INSTANCE.send(new TankDieMsg(id,tankFrame.myTank.id));
         }
     }
 

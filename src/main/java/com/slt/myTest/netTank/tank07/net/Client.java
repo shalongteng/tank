@@ -24,6 +24,8 @@ public class Client {
 		try {
 			ChannelFuture f = b.group(group)
 					.channel(NioSocketChannel.class)
+					//禁用nagle算法
+					.option(ChannelOption.TCP_NODELAY, false)
 					.handler(new ClientChannelInitializer())
 					.connect("localhost", 8888);
 
